@@ -1,0 +1,15 @@
+
+.table>thead>tr>th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #bd1398;
+
+}
+
+th {
+    background-color: #4CAF50;
+    height: 0px;
+    padding: 15px;
+    text-align: left;
+}
+
+
