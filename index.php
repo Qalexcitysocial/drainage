@@ -30,7 +30,7 @@
                     if (!$conn) {
                         die("Connection failed: " . mysqli_connect_error());
                     }
-                    $sql = "SELECT (`status`) FROM `drainer` ORDER BY ttime DESC LIMIT 1";
+                    $sql = "SELECT (`status`) FROM `irrigation` ORDER BY ttime DESC LIMIT 1";
                     $result = mysqli_query($conn, $sql);
 
                     if (mysqli_num_rows($result) > 0) {
@@ -67,13 +67,21 @@
     <h3>Current Conditions</h3>
 
     <p><?php echo date('H:i:s m-d-Y');?>
-
+    <?php
+     exec ( "gpio read 22", $status );
+     print_r ( $status );
+     ?>
 
     <div class="row">
         <div class="col-sm-3">
             <div id="charttemp_div" style="width: 200px; height: 200px;"></div>
         </div>
-        <table class = "table">
+       <!--refreshing the page every 5 sec>
+       <script type="text/javascript">
+       setTimeout (
+       function() { window.location.reload(); }, 5000)
+       </script--> 
+       <table class = "table">
 
             <thead>
               <tr>
@@ -94,7 +102,7 @@
             }
 
             //$sql = "SELECT (`distance`) FROM `distance` ORDER BY ttime DESC LIMIT 1";
-            $sql = "SELECT (`onoff`) FROM `drainer` ORDER BY ttime DESC LIMIT 1";
+            $sql = "SELECT (`onoff`) FROM `irrigation` ORDER BY ttime DESC LIMIT 1";
 
             $result = mysqli_query($conn, $sql);
 
@@ -150,7 +158,7 @@
                     die("Connection failed: " . mysqli_connect_error());
                 }
 
-                $sql = "SELECT (`status`) FROM `drainer` ORDER BY ttime DESC LIMIT 1";
+                $sql = "SELECT (`status`) FROM `irrigation` ORDER BY ttime DESC LIMIT 1";
                 $result = mysqli_query($conn, $sql);
 
                 if (mysqli_num_rows($result) > 0) {

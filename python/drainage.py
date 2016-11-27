@@ -28,25 +28,28 @@ buoy = 0
 elec_valve = 0
 
 while  True:
-    if GPIO.input(17)  == 1:                        #check the status of the signal wa$
-        print ("Botella Patron vacia o dispnible")  #if the sensor is ON Down will act$
+    if GPIO.input(17)  == 0:                        #check the status of the signal wa$
+        print ("Botella Vacia Y Valvula Cerrada")  #if the sensor is ON Down will act$
         GPIO.output(7, 0)                           #Water pump or selenoid Off
         time.sleep(5)
         buoy += 1
 
-    elif GPIO.input(17)  == 0:                      #when output from sensor water lev$
-        print ("Riego detectado, bomba activada")
+    elif GPIO.input(17)  == 1:                      #when output from sensor water lev$
+        #print ("Botella LLena Valvula Abierta")
         GPIO.output(7, 1)                           #Water pump or selenoid On
         time.sleep(5)
         elec_valve +=1
+        print ("Botella LLena Valvula Abierta")
+        print buoy
+        print elec_valve
 
-    total_irrigation = buoy - elec_valve
-
+        total_irrigation = elec_valve - buoy
+        print total_irrigation
 print buoy
 print elec_valve
 print total_irrigation
 
-GPIO.clean()
+#GPIO.clean()
 
 #Open database connection
 db = MySQLdb.connect("localhost", "datalogger","datalogger","datalogger")
@@ -55,7 +58,7 @@ curs = db.cursor()
 try:
    #sqlline = "insert into distance values (NOW(), {0:0.1f});".format(buoy)
    #sqlline = "insert into distance values (NOW(), {0:0.1f});".format(elec_valve)
-   sqlline = "insert into irrigation values (NOW(), {0:0.1f});".format(total_irrigation)
+   sqlline = "insert into irrigation values (NOW(), {}, {}, {});".format(status, onoff)
    curs.execute(sqlline)
    curs.execute ("DELETE FROM irrigation WHERE ttime < NOW() -INTERVAL 1 DAY;")
    db.commit()
