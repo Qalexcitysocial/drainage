@@ -67,11 +67,6 @@
     <h3>Current Conditions</h3>
 
     <p><?php echo date('H:i:s m-d-Y');?>
-    <?php
-     exec ( "gpio read 22", $status );
-     print_r ( $status );
-     ?>
-
     <div class="row">
         <div class="col-sm-3">
             <div id="charttemp_div" style="width: 200px; height: 200px;"></div>
