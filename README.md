@@ -1,6 +1,6 @@
 
 
-<h2>This is a project based on python and php MySQL where you can control the irrigation or drainage of yor garden or plants</h2>
+<h2>This is a project based on python and php MySQL where you can control the irrigation or drainage of your garden or plants</h2>
 
 1. Getting Started
 
